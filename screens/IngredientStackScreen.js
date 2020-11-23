@@ -4,7 +4,6 @@ import Axios from "axios";
 import Modal from "react-native-modal";
 import {
   ScrollView,
-  // Modal,
   View,
   Text,
   Button,
@@ -12,6 +11,7 @@ import {
   Image,
   ActivityIndicator,
   TextInput,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 
@@ -42,7 +42,58 @@ const IngredientStackScreen = ({ navigation, route }) => {
         </Text>
       );
     } else if (recipes.length > 0) {
-      return <Text>Items Found</Text>;
+      return recipes.map((data, index) => {
+        return (
+          <View
+            key={index}
+            style={{
+              marginLeft: 10,
+              marginTop: 10,
+              marginEnd: 10,
+              marginRight: 10,
+              flexDirection: "row",
+              justifyContent: "flex-start",
+            }}
+          >
+            <TouchableWithoutFeedback
+              onPress={() =>
+                navigation.push("Recipe", {
+                  recipeData: data,
+                })
+              }
+            >
+              <Image
+                style={{ width: 100, height: 100 }}
+                source={{
+                  uri: data.image,
+                }}
+              ></Image>
+            </TouchableWithoutFeedback>
+            <View>
+              <Text>{"    "}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  navigation.push("Recipe", {
+                    recipeData: data,
+                  })
+                }
+              >
+                <Text
+                  style={{ fontSize: 22, fontWeight: "bold", color: "#37b34a" }}
+                >
+                  {data.title}
+                </Text>
+              </TouchableWithoutFeedback>
+
+              <Text>Serving Size: {data.servings}</Text>
+              <Text>Calories per Serving: {"40"}</Text>
+              <Text>Ready In: {data.readyInMinutes} minutes</Text>
+            </View>
+          </View>
+        );
+      });
     } else {
       return (
         <Text
@@ -69,7 +120,7 @@ const IngredientStackScreen = ({ navigation, route }) => {
     } finally {
       setLoading(true);
       setModalVisible(false);
-      console.log(datum);
+      // console.log(datum);
       Axios.post("https://mealday.herokuapp.com/recipes/byIngredient", datum)
         .then((res) => {
           setRecipes(res.data);
@@ -133,6 +184,7 @@ const IngredientStackScreen = ({ navigation, route }) => {
                       }}
                     >
                       <TextInput
+                        autoCapitalize={"none"}
                         onBlur={onBlur}
                         onChangeText={(value) => {
                           onChange(value);
@@ -160,7 +212,7 @@ const IngredientStackScreen = ({ navigation, route }) => {
                   </View>
                 )}
                 name="ingredient"
-                defaultValue="test"
+                defaultValue=""
               />
               <View style={{ height: 5 }}></View>
               {fields.map((item, index) => (
@@ -185,6 +237,7 @@ const IngredientStackScreen = ({ navigation, route }) => {
                         render={({ onChange, onBlur, value }) => (
                           <>
                             <TextInput
+                              autoCapitalize={"none"}
                               onBlur={onBlur}
                               onChangeText={(value) => {
                                 onChange(value);
@@ -248,7 +301,8 @@ const IngredientStackScreen = ({ navigation, route }) => {
           }}
         >
           <Button
-            title={"Show Modal"}
+            color="#37b34a"
+            title={"Pick My Ingredients"}
             onPress={() => {
               setModalVisible(true);
             }}

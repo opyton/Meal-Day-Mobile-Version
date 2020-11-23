@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   },
   centerTexts: {
     color: "white",
-    fontSize: 22,
+    fontSize: 18,
     textAlign: "center",
     position: "absolute",
-    top: "50%",
-    left: "50%",
+    top: "40%",
+    left: "13%",
     // transform: "translate(-50%, -50%)",
   },
   burgerIcon: {

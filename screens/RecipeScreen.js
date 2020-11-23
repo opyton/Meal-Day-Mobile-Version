@@ -33,23 +33,22 @@ const RecipeScreen = ({ navigation, route }) => {
     ));
 
   const getCalories = (rando) => {
-    return parseInt("40");
-    // return rando.summary
-    //   .substring(0, rando.summary.indexOf("<a"))
-    //   .replaceAll("<b>", "")
-    //   .replaceAll("</b>", "")
-    //   .replaceAll(".", "")
-    //   .replaceAll(",", "")
-    //   .split(" ")[
-    //   rando.summary
-    //     .substring(0, rando.summary.indexOf("<a"))
-    //     .replaceAll("<b>", "")
-    //     .replaceAll("</b>", "")
-    //     .replaceAll(".", "")
-    //     .replaceAll(",", "")
-    //     .split(" ")
-    //     .indexOf("calories") - 1
-    // ];
+    return rando.summary
+      .substring(0, rando.summary.indexOf("<a"))
+      .replace(/<b>/g, "")
+      .replace(/[</b>]/g, "")
+      .replace(/[.]/g, "")
+      .replace(/[,]/g, "")
+      .split(" ")[
+      rando.summary
+        .substring(0, rando.summary.indexOf("<a"))
+        .replace(/<b>/g, "")
+        .replace(/[</b>]/g, "")
+        .replace(/[.]/g, "")
+        .replace(/[,]/g, "")
+        .split(" ")
+        .indexOf("calories") - 1
+    ];
   };
   const DisplayAllData = (rando) => (
     <>
@@ -65,12 +64,12 @@ const RecipeScreen = ({ navigation, route }) => {
         />
       </View>
       <Text>
-        Sample Summary
-        {/* {rando.summary
-                  .substring(0, rando.summary.indexOf("<a"))
-                  .replaceAll("<b>", "")
-                  .replaceAll("</b>", "")
-                  .replace("spoonacular", "Meal Day")} */}
+        {rando.summary
+          .substring(0, rando.summary.indexOf("<a"))
+          .replace(/<b>/g, "")
+          .replace(/[</b>]/g, "")
+          .replace(/spoonacular/g, "Meal Day")}
+
         {"\n"}
       </Text>
       <Text>Serving Size: {rando.servings}</Text>

@@ -52,12 +52,12 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Pick My Ingredients"
         component={IngredientDetailScreen}
-        options={otherOptions}
+        options={homeOptions}
       />
       <Drawer.Screen
         name="Surprise Me!"
         component={RandomScreen}
-        options={otherOptions}
+        options={homeOptions}
       />
     </Drawer.Navigator>
   );
